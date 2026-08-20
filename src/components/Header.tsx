@@ -1,21 +1,12 @@
 "use client";
 
-import {
-  Bell,
-  LogIn,
-  LogOut,
-  Mail,
-  Menu,
-  Search,
-  ShoppingCart,
-  Store,
-  X,
-} from "lucide-react";
+import { LogIn, LogOut, Menu, Search, ShoppingCart, Store, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
+import SearchBar from "@/components/SearchBar";
 
 const NAV_ITEMS = [
   { label: "Inicio", href: "/" },
@@ -30,6 +21,7 @@ export default function Header() {
   const { count, open } = useCart();
   const { user, openDialog, logout } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
 
   function isActive(href: string) {
     return href === "/" ? pathname === "/" : pathname.startsWith(href);
@@ -69,24 +61,23 @@ export default function Header() {
         </nav>
 
         <div className="relative ml-auto hidden max-w-xs flex-1 md:block xl:max-w-sm">
-          <Search
-            className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500"
-            aria-hidden
-          />
-          <label htmlFor="site-search" className="sr-only">
-            Buscar productos
-          </label>
-          <input
-            id="site-search"
-            type="search"
-            placeholder="Buscar..."
-            autoComplete="off"
-            maxLength={100}
-            className="w-full rounded-full border border-line/80 bg-panel/60 py-2.5 pl-10 pr-4 text-sm text-foreground placeholder:text-zinc-500 outline-none transition-colors focus:border-violet-500/60 focus:bg-panel"
-          />
+          <SearchBar variant="desktop" />
         </div>
 
         <div className="ml-auto flex items-center gap-1 md:ml-0">
+          <button
+            type="button"
+            onClick={() => setSearchOpen((v) => !v)}
+            aria-label={searchOpen ? "Cerrar búsqueda" : "Abrir búsqueda"}
+            aria-expanded={searchOpen}
+            className="rounded-xl p-2.5 text-zinc-400 transition-colors hover:bg-panel hover:text-foreground md:hidden"
+          >
+            {searchOpen ? (
+              <X className="h-5 w-5" aria-hidden />
+            ) : (
+              <Search className="h-5 w-5" aria-hidden />
+            )}
+          </button>
           <button
             type="button"
             onClick={open}
@@ -99,20 +90,6 @@ export default function Header() {
                 {count}
               </span>
             )}
-          </button>
-          <button
-            type="button"
-            aria-label="Notificaciones"
-            className="hidden rounded-xl p-2.5 text-zinc-400 transition-colors hover:bg-panel hover:text-foreground sm:inline-flex"
-          >
-            <Bell className="h-5 w-5" aria-hidden />
-          </button>
-          <button
-            type="button"
-            aria-label="Mensajes"
-            className="hidden rounded-xl p-2.5 text-zinc-400 transition-colors hover:bg-panel hover:text-foreground sm:inline-flex"
-          >
-            <Mail className="h-5 w-5" aria-hidden />
           </button>
           {user ? (
             <div className="ml-0.5 flex items-center gap-1.5 rounded-full bg-panel/60 p-1 pr-1.5">
@@ -157,6 +134,13 @@ export default function Header() {
           </button>
         </div>
       </div>
+
+      {/* Búsqueda móvil */}
+      {searchOpen && (
+        <div className="border-t border-line/60 px-4 py-3 sm:px-6 md:hidden">
+          <SearchBar variant="mobile" />
+        </div>
+      )}
 
       {/* Navegación móvil */}
       {menuOpen && (

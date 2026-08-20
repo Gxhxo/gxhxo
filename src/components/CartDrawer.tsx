@@ -49,7 +49,7 @@ export default function CartDrawer() {
               {items.map(({ product, quantity }) => (
                 <li key={product.id} className="flex gap-3">
                   <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-zinc-800 to-zinc-900 text-xl">
-                    🧩
+                    <span aria-hidden>{product.emoji}</span>
                   </div>
                   <div className="flex flex-1 flex-col">
                     <p className="text-sm font-medium text-foreground">

@@ -16,7 +16,7 @@ const LINK_COLUMNS = [
     links: [
       { label: "Todos los productos", href: "/tienda" },
       { label: "Ofertas", href: "/ofertas" },
-      { label: "Novedades", href: "/tienda" },
+      { label: "Novedades", href: "/novedades" },
     ],
   },
   {
