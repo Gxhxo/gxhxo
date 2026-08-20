@@ -13,7 +13,9 @@ export function generateStaticParams() {
 
 export default async function RewardPage({
   params,
-}: PageProps<"/gratis/[id]">) {
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = await params;
   const product = freeProducts.find((p) => p.id === id);
 

@@ -24,7 +24,11 @@ export const metadata: Metadata = {
     "Plantillas, cursos, presets y recursos digitales creados por creadores independientes.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html
       lang="es"

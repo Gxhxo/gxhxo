@@ -11,7 +11,9 @@ export function generateStaticParams() {
 
 export default async function ProductPage({
   params,
-}: PageProps<"/tienda/[id]">) {
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = await params;
   const product = products.find((p) => p.id === id);
 
